@@ -1,0 +1,15 @@
+clc; clear all; close all;
+run("text_extrait.m");
+o=cell2mat(l_por_x);
+w=cell2mat(l_por_y);
+t=cell2mat(time);
+a = 1;
+b = [1/4 1/4 1/4 1/4];
+porX=conv(b,o);
+porY=conv(b,w);
+%x=filter(b,a,o);
+%y=filter(b,a,w);
+%imfilter(x,[1 1 1]);
+%plot(t,x,'g--');
+%plot(t,o,'g--',t,x,'r-');
+%legend('Original data','filtered data');

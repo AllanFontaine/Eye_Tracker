@@ -1,5 +1,3 @@
-clc; clear all; close all;
-
 full_path = 'C:\Users\HE201632\Downloads\projet\projet';
 
 textFileName = 'Test Your Awareness eyes data.txt';
@@ -23,11 +21,13 @@ data = textscan( fid, fmt, Inf, 'Delimiter', '\t', 'headerLines', 2 ) ;
 fclose( fid ) ;
 
 index = find(contains(total_header, 'POR'));
+index2 = find(contains(total_header,'Time'));
 
+time = num2cell(data{index2(1)});
 l_por_x = num2cell(data{index(1)});
 l_por_y = num2cell(data{index(2)});
 r_por_x = num2cell(data{index(3)});
 r_por_y = num2cell(data{index(4)});
 
-Img = imread( '%s\frames\images_500.png', full_path);
-imshow(Img)
+%Img = imread( '%s\frames\images_500.png', full_path);
+%imshow(Img)

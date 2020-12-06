@@ -13,32 +13,16 @@ test_sgolayfilter_y = sgolayfilt(y, 100, 1709);
 
 % Median filter
 
-test_median_x = [1709];
-test_median_x(1) = median([0 0 x(1) x(2) x(3)]);
-test_median_x(2) = median([0 x(1) x(2) x(3) x(4)]);
-for i=3: length(x)-2
-    test_median_x(i) = median([x(i-2) x(i-1) x(i) x(i+1) x(i+2)]);
-end
-test_median_x(1708)=median([x(1705) x(1706) x(1707) x(1708) 0]);
-test_median_x(1709)=median([x(1706) x(1707) x(1708) x(1709) 0]);
-
-test_median_y = (1709);
-test_median_y(1) = median([0 0 y(1) y(2) y(3)]);
-test_median_y(2) = median([0 y(1) y(2) y(3) y(4)]);
-for i=3: length(y)-2
-    test_median_y(i) = median([y(i-2) y(i-1) y(i) y(i+1) y(i+2)]);
-end
-test_median_y(1708)=median([y(1705) y(1706) y(1707) y(1708) 0]);
-test_median_y(1709)=median([y(1706) y(1707) y(1708) y(1709) 0]);
+test_median_x = median_custom(x);
+test_median_y = median_custom(y);
 
 %Moving average filter
 
-test_moving_x = (1709);
-test_moving_x(1) = 1/3*(0 + x(1) + x(2));
-for i=2: length(x)-1
-    test_moving_x(i)
-end
+test_moving_x = moving(x);
+test_moving_y = moving(y);
 
+test_moving_med_x = median_custom(test_moving_x);
+test_moving_med_y = median_custom(test_moving_y);
 
 %Présentation
 subplot(2,1,1);
@@ -56,3 +40,43 @@ subplot(2,1,2);
 plot(t_points, y, '--', t_points, test_median_y);
 legend('Signal de base', "Signal Y filtered");
 title('Médiane filter');
+
+subplot(2,1,1);
+plot(t_points,x,'--', t_points,test_moving_x);
+legend('Signal de base', "Signal X filtered");
+title('Moving average filter');
+subplot(2,1,2);
+plot(t_points,y,'--', t_points,test_moving_y);
+legend('Signal de base', "Signal Y filtered");
+title('Moving average filter');
+
+subplot(2,1,1);
+plot(t_points,test_moving_x,'--', t_points,test_moving_med_x, 'r');
+legend('Signal moving', "Signal moving puis SG");
+title('Signal moving puis SG')
+subplot(2,1,2);
+plot(t_points,test_moving_y,'--', t_points,test_moving_med_y, 'r');
+legend('Signal moving', "Signal moving puis SG");
+title('Signal moving puis SG');
+
+% Functions
+
+function name = moving(var)
+    name = (1709);
+    name(1) = 1/3*(0 + var(1) + var(2));
+    for i=2: length(var)-1
+        name(i) = 1/3*(var(i-1) + var(i) + var(i+1));
+    end
+    name(1709) = 1/3*( var(1708) + var(1709) + 0);
+end
+
+function name = median_custom(var)
+    name = [1709];
+    name(1) = median([0 0 var(1) var(2) var(3)]);
+    name(2) = median([0 var(1) var(2) var(3) var(4)]);
+    for i=3: length(var)-2
+        name(i) = median([var(i-2) var(i-1) var(i) var(i+1) var(i+2)]);
+    end
+    name(1708)=median([var(1705) var(1706) var(1707) var(1708) 0]);
+    name(1709)=median([var(1706) var(1707) var(1708) var(1709) 0]);
+end

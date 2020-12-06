@@ -1,14 +1,14 @@
 reader = VideoReader('Test Your Awareness.avi');
 
 
-for numb = 1: 500
+for numb = 1: 1709
     I = imread(strcat('frames/image_', num2str(numb), '.png'));
 
     imshow(I);
 
     hold on;
     
-    plot(test_median_x(numb)/1.6, test_median_y(numb)/1.6, 'g+', 'MarkerSize', 10);
+    plot(test_moving_med_x(numb)/1.6, test_moving_med_y(numb)/1.6, 'mo', 'MarkerSize', 10);
 
     hold off;
 
@@ -19,7 +19,7 @@ end
 
 disp('image fini, maintenant video')
 
-imgNum = 500;
+imgNum = 1709;
 %remet les frames en vidéo
 for i = 1: imgNum
 	img=imread(strcat('framescopy/imagecopy_', num2str(i), '.png'));

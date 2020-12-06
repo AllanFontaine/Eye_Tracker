@@ -8,10 +8,10 @@ y = spline(temps,y_data,t_points);
 
 % Savitsky-golay Filter
 
-test_sgolayfilter_x = sgolayfilt(x, 70, 1709);
-test_sgolayfilter_y = y;
+test_sgolayfilter_x = sgolayfilt(x, 100, 1709);
+test_sgolayfilter_y = sgolayfilt(y, 100, 1709);
 
-%Median filter
+% Median filter
 
 test_median_x = [1709];
 test_median_x(1) = median([0 0 x(1) x(2) x(3)]);
@@ -22,7 +22,7 @@ end
 test_median_x(1708)=median([x(1705) x(1706) x(1707) x(1708) 0]);
 test_median_x(1709)=median([x(1706) x(1707) x(1708) x(1709) 0]);
 
-test_median_y = [1709];
+test_median_y = (1709);
 test_median_y(1) = median([0 0 y(1) y(2) y(3)]);
 test_median_y(2) = median([0 y(1) y(2) y(3) y(4)]);
 for i=3: length(y)-2
@@ -31,12 +31,23 @@ end
 test_median_y(1708)=median([y(1705) y(1706) y(1707) y(1708) 0]);
 test_median_y(1709)=median([y(1706) y(1707) y(1708) y(1709) 0]);
 
-%Présentation
+%Moving average filter
 
-figure,plot(t_points,x,'-.', t_points,test_sgolayfilter_x);
-title('Point X');
-figure,plot(t_points,y,'x', t_points,test_sgolayfilter_y);
-title('Point Y');
+test_moving_x = (1709);
+test_moving_x(1) = 1/3*(0 + x(1) + x(2));
+for i=2: length(x)-1
+    test_moving_x(i)
+end
+
+
+%Présentation
+subplot(2,1,1);
+plot(t_points,x,'--', t_points,test_sgolayfilter_x);
+legend('Signal de base', "Signal X filtered");
+subplot(2,1,2);
+plot(t_points,y,'--', t_points,test_sgolayfilter_y);
+legend('Signal de base', "Signal Y filtered");
+title('Savitsky-golay filter');
 
 subplot(2,1,1);
 plot(t_points, x, '--', t_points, test_median_x);
@@ -44,3 +55,4 @@ legend('Signal de base', "Signal X filtered");
 subplot(2,1,2);
 plot(t_points, y, '--', t_points, test_median_y);
 legend('Signal de base', "Signal Y filtered");
+title('Médiane filter');

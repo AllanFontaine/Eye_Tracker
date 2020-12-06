@@ -1,3 +1,6 @@
+reader = VideoReader('Test Your Awareness.avi');
+
+
 for numb = 1: 500
     I = imread(strcat('frames/image_', num2str(numb), '.png'));
 
@@ -5,7 +8,7 @@ for numb = 1: 500
 
     hold on;
     
-    plot(test_sgolayfilter_x(numb)/1.6, test_sgolayfilter_y(numb)/1.6, 'g+', 'MarkerSize', 10);
+    plot(test_median_x(numb)/1.6, test_median_y(numb)/1.6, 'g+', 'MarkerSize', 10);
 
     hold off;
 
@@ -23,8 +26,10 @@ for i = 1: imgNum
 	video(:,:,:,i) = img;
 end
 
-v = VideoWriter('Test Your Awareness test.avi');
-open(v)
-writeVideo(v, video)
-close(v)
-disp('video converted, check it out')
+disp('video fichier crée, maintenant, créer la vidéo');
+writer = VideoWriter('Test Your Awareness test.avi');
+writer.FrameRate = reader.FrameRate;
+open(writer);
+writeVideo(writer, video);
+close(writer);
+disp('video converted, check it out');

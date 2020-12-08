@@ -24,7 +24,7 @@ test_moving_y = moving(y);
 test_moving_med_x = median_custom(test_moving_x);
 test_moving_med_y = median_custom(test_moving_y);
 
-%Présentation
+%Prï¿½sentation
 subplot(2,1,1);
 plot(t_points,x,'--', t_points,test_sgolayfilter_x);
 legend('Signal de base', "Signal X filtered");
@@ -39,7 +39,7 @@ legend('Signal de base', "Signal X filtered");
 subplot(2,1,2);
 plot(t_points, y, '--', t_points, test_median_y);
 legend('Signal de base', "Signal Y filtered");
-title('Médiane filter');
+title('Mï¿½diane filter');
 
 subplot(2,1,1);
 plot(t_points,x,'--', t_points,test_moving_x);

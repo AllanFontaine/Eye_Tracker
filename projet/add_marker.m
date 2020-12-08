@@ -26,7 +26,7 @@ for i = 1: imgNum
 	video(:,:,:,i) = img;
 end
 
-disp('video fichier crée, maintenant, créer la vidéo');
+disp('video fichier crï¿½e, maintenant, crï¿½er la vidï¿½o');
 writer = VideoWriter('Test Your Awareness test.avi');
 writer.FrameRate = reader.FrameRate;
 open(writer);

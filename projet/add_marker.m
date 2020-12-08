@@ -1,36 +1,35 @@
-close all; clear all; clc;
-run('filter_data.m');
-first=1;
-last=20;
-for numb = 1: 1700
-    %x=[];
-    %y=[];
-    x=0;
-    y=0;
-    for j = first:last
-        %x= [x,r_por_x{j}];
-        %y= [y,r_por_y{j}];
-        x=x+porX(j);
-        y=y+porY(j);
-    end
-    first= first+20;
-    last = last+20;
-    x=x/20;
-    y=y/20;
-    disp(strcat("frame numéro :",num2str(numb),' x= ',num2str(x/1.6),'/ y= ',num2str(y/1.6)));
-    I = imread(strcat('frames/image_',num2str(numb),'.png'));
+reader = VideoReader('Test Your Awareness.avi');
+
+
+for numb = 1: 1709
+    I = imread(strcat('frames/image_', num2str(numb), '.png'));
 
     imshow(I);
 
     hold on;
-    %for p = 1:19
-       % plot(x(p), y(p), 'g+', 'MarkerSize', 10);
-    %end
     
-    plot(x/1.6, y/1.6, 'go', 'MarkerSize', 10);
+    plot(test_moving_med_x(numb)/1.6, test_moving_med_y(numb)/1.6, 'mo', 'MarkerSize', 10);
+
     hold off;
 
     a = getframe;
 
     imwrite(a.cdata, strcat('framescopy/imagecopy_',num2str(numb),'.png'));
 end
+
+disp('image fini, maintenant video')
+
+imgNum = 1709;
+%remet les frames en vidÃ©o
+for i = 1: imgNum
+	img=imread(strcat('framescopy/imagecopy_', num2str(i), '.png'));
+	video(:,:,:,i) = img;
+end
+
+disp('video fichier crée, maintenant, créer la vidéo');
+writer = VideoWriter('Test Your Awareness test.avi');
+writer.FrameRate = reader.FrameRate;
+open(writer);
+writeVideo(writer, video);
+close(writer);
+disp('video converted, check it out');
